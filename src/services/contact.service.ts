@@ -1,7 +1,7 @@
 import {Contact} from "../model/contact.model";
 import {contactList} from "../db/db";
 
-//retrieve saved contact data
+//get all data
 export const getAllContacts = (): Contact[] => {
     return contactList;
 }

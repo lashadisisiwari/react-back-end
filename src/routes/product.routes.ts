@@ -8,7 +8,7 @@ const productRouter:Router = Router();
 //handle requests
 
 //controller eke api liwa getallproduct methode ek thmi methn demma
-productRouter.get("/all", getAllProducts); //get all
+productRouter.get("/all", getAllProducts); //get all kiyana controller method eka call wenne
 productRouter.post("/save", saveProduct); //save
 productRouter.get("/:id" , getProduct);
 productRouter.put("/update/:id" , updateProduct);

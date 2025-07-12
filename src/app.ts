@@ -29,7 +29,9 @@ const corsOptions = {
     }
 };
 
+//apply CORS middileware
 app.use(cors(corsOptions));
+
 app.use("/api/products", productRoutes);
 app.use("/api/contact",contactRoutes);
 

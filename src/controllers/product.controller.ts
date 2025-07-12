@@ -2,9 +2,9 @@ import {Request, Response} from "express";
 import * as productService from "../services/products.service";
 
 //controller function to handle get all products
-export const getAllProducts = (req:Request, res:Response) => {
+export const getAllProducts = async (req:Request, res:Response) => {
 try{
-    const products = productService.getAllProducts();
+    const products = await productService.getAllProducts();
     res.status(200).json(products);
    }catch (error){
     console.error(error);
@@ -13,15 +13,15 @@ try{
 }
 
 //controller function to handle save product
-export const saveProduct = (req:Request, res:Response) => {
+export const saveProduct = async (req:Request, res:Response) => {
     try {
         const newProduct = req.body;
-        const validationError = productService.validateProduct(newProduct);
+        const validationError = await productService.validateProduct(newProduct);
         if(validationError){
             res.status(400).json({error: validationError});
             return;  //flow ek break krn request ek break krn (return) void type
         }
-        const savedProduct = productService.saveProduct(newProduct);
+        const savedProduct =  productService.saveProduct(newProduct);
         res.status(201).json(savedProduct);
     }catch (error){
         console.error(error);
@@ -29,13 +29,13 @@ export const saveProduct = (req:Request, res:Response) => {
     }
 }
 
-export const getProduct = (req:Request, res:Response) => {
-    const productId = parseInt(req.params.id);
+export const getProduct = async (req:Request, res:Response) => {
+    const productId =  parseInt(req.params.id);
     if(isNaN(productId)){
         res.status(400).json({error: 'invalid product Id'});
         return;
     }
-    const product = productService.getProductById(productId);
+    const product = await productService.getProductById(productId);
     if(!product){
         res.status(404).json({error: 'product not found'}); //product nethan mek
         return;
@@ -43,14 +43,14 @@ export const getProduct = (req:Request, res:Response) => {
     res.status(200).json(product); //illapu product ek tiye nn mek ywnwa
 }
 
-export const updateProduct = (req:Request, res:Response) => {
+export const updateProduct = async (req:Request, res:Response) => {
     const productId = parseInt(req.params.id);
     if(isNaN(productId)) {
         res.status(400).json({error: 'invalid product Id'});
         return;
     }
     const updatedData = req.body;
-    const updatedProduct = productService.updateProduct(productId, updatedData);
+    const updatedProduct = await productService.updateProduct(productId, updatedData);
     if(!updatedProduct){
         res.status(404).json({error: 'product not found'}); //id eken hoya gnn beri nn me error ek enawa
         return;
@@ -58,13 +58,13 @@ export const updateProduct = (req:Request, res:Response) => {
     res.status(200).json(updatedProduct); //update product ek yewwa
 }
 
-export  const deleteProduct = (req:Request, res:Response) => {
+export  const deleteProduct = async (req:Request, res:Response) => {
     const productId = parseInt(req.params.id);
     if(isNaN(productId)) {
         res.status(400).json({error: 'invalid product Id'});
         return;
     }
-    const deleteProduct = productService.deleteProduct(productId)
+    const deleteProduct = await productService.deleteProduct(productId)
     if(!deleteProduct){
         res.status(404).json({error: 'product not found'});
         return;

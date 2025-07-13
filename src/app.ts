@@ -3,6 +3,7 @@ import express, {Express,Request, Response} from "express";
 import cors from "cors";
 import productRoutes from "./routes/product.routes";
 import contactRoutes from "./routes/contact.routes";
+import authRoutes from "./routes/auth.routes";
 
 
 // 1. initialize the express app -express walin app eka hadanwa
@@ -32,6 +33,7 @@ const corsOptions = {
 //apply CORS middileware
 app.use(cors(corsOptions));
 
+app.use("/api/auth",authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/contact",contactRoutes);
 
